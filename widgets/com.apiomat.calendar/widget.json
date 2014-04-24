@@ -1,0 +1,13 @@
+{
+	"id": "com.apiomat.calendar",
+	"name": "com.apiomat.calendar",
+	"description" : "This is the calendar with a swipe action and a tab bar.",
+	"author": "Tim Friedrich/Apinauten GmbH",
+	"version": "1.2",
+	"copyright":"Copyright (c) 2013 Apinauten GmbH",
+	"license":"MIT License",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"calendar, alloy, titanium, swipe,tab",
+	"platforms":"android,ios"
+}

@@ -1,0 +1,41 @@
+/**
+ * original author:	hamasyou (https://github.com/hamasyou)
+ * original url:	https://github.com/hamasyou/titanium_alloy_calendar
+ * 
+ * author: 			Apinauten GmbH (Tim Friedrich)
+ * url:				http://www.apiomat.com
+ * version:			1.2
+ * license:			MIT License
+ * 
+ * tags: 			calendar, alloy, titanium, swipe, tabs
+ */
+
+'View': {
+    width: Ti.UI.FILL,
+    height: Ti.UI.FILL
+},
+'#container': {
+    top: 0,
+    left: 0,
+    width: Ti.UI.FILL,
+    height: Ti.UI.SIZE
+},
+
+'#tabBar': {
+	width:Ti.UI.FILL,
+	height:'40',
+	layout:"horizontal",
+	showHorizontalScrollIndicator : false,
+	scrollType : 'horizontal',
+	horizontalWrap:false
+},
+'#days': {
+    backgroundRepeat: true,
+    layout: 'horizontal',
+    height: Ti.UI.SIZE,
+},
+'#dates': {
+    layout: 'vertical',
+    top: '22dp',
+    height: Ti.UI.FILL,
+}

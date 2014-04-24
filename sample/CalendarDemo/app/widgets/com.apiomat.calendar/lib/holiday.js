@@ -1,10 +1,20 @@
+/**
+ * original author:	hamasyou (https://github.com/hamasyou)
+ * original url:	https://github.com/hamasyou/titanium_alloy_calendar
+ * 
+ * version:			1.0
+ * license:			MIT License
+ * 
+ * tags: 			calendar, alloy, titanium, swipe, tabs
+ */
+
 var Alloy, TiDomParser, moment, _;
 
 Alloy = require('alloy');
 
 _ = Alloy._;
 
-moment = require('alloy/moment');
+moment = require('moment');
 
 TiDomParser = require('/jp.co.mountposition.calendar/TiDomParser');
 
@@ -18,7 +28,7 @@ exports.fetch = function(month, callback) {
     'start-min': month.startOf('month').format('YYYY-MM-DD'),
     'start-max': month.endOf('month').format('YYYY-MM-DD')
   };
-  url = 'http://www.google.com/calendar/feeds/japanese__ja@holiday.calendar.google.com/public/full?' + ((function() {
+  url = 'http://www.google.com/calendar/feeds/german@holiday.calendar.google.com/public/full?' + ((function() {
     var _results;
     _results = [];
     for (key in params) {

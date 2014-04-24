@@ -6,6 +6,6 @@
 	"os:ios": {},
 	"os:android": {},
 	"dependencies": {
-        "jp.co.mountposition.calendar": "1.0"
+        "com.apiomat.calendar": "1.2"
     }
 }

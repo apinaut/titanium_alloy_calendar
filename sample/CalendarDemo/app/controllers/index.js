@@ -9,7 +9,7 @@ function doPrevMonth() {
 
     // Create previous month calendar and add view
     currentMonth.subtract('months', 1);
-    widget = Alloy.createWidget('jp.co.mountposition.calendar', 'widget', {period: currentMonth});
+    widget = Alloy.createWidget('com.apiomat.calendar', 'widget', {period: currentMonth});
     $.calendar.add(widget.getView());
 
     // Get calendar displayed (moment object)
@@ -22,7 +22,7 @@ function doNextMonth() {
 
     // Create next month calendar and add view
     currentMonth.add('months', 1);
-    widget = Alloy.createWidget('jp.co.mountposition.calendar', 'widget', {period: currentMonth});
+    widget = Alloy.createWidget('com.apiomat.calendar', 'widget', {period: currentMonth});
     $.calendar.add(widget.getView());
 
     Ti.API.info(widget.calendarMonth());
@@ -30,9 +30,6 @@ function doNextMonth() {
 
 // You can select tile
 $.current.select(18);
-
-// You can add image
-$.current.setImage(16, '/images/cafe.jpg');
 
 // To handle the click event, set the listener to the parent View.
 $.calendar.on('click', function(e) {

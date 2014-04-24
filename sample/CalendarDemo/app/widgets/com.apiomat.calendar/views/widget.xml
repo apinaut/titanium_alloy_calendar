@@ -1,0 +1,9 @@
+<Alloy>
+	<View id="view" layout="vertical">
+		<ScrollView id="tabBar"></ScrollView>
+		<View id="container" layout="vertical">
+			<View id="days"></View>
+			<View id="dates" onClick="doClick"></View>
+		</View>
+	</View>
+</Alloy>
