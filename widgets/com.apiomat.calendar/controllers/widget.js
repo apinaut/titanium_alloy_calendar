@@ -28,7 +28,7 @@ tabCount	=args.tabCount				!=null 	? 	args.tabCount 			: 3;
 dateCount	=args.dateCount				!=null 	? 	args.dateCount 			: 7;
 dateSpace	=args.dateSpace				!=null 	? 	args.dateSpace 			: 30;
 tabBar		=args.tabBar				!=null 	? 	args.tabBar 			: false;
-displayDayNames		= 	args.color.displayDayNames		!=null	?	args.color.displayDayNames		:	true;
+displayDayNames		= 	args.displayDayNames		!=null	?	args.displayDayNames		:	true;
 holiday		= 	args.holiday			!=null	?	args.holiday			:	true;
 font		= 	args.font				!=null 	?	args.font				: 	{fontSize : '16dp'};
 rangeFromToday=args.rangeFromToday		!=null	?	args.rangeFromToday		:	false;
