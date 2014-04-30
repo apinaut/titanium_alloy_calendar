@@ -14,9 +14,9 @@ Alloy = require('alloy');
 
 _ = Alloy._;
 
-moment = require('moment');
+moment = require('alloy/moment');
 
-TiDomParser = require('/jp.co.mountposition.calendar/TiDomParser');
+TiDomParser = require('/com.apiomat.calendar/TiDomParser');
 
 exports.fetch = function(month, callback) {
   var client, key, params, url, val;

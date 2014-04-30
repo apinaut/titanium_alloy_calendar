@@ -5,7 +5,7 @@
             <Button id="nextMonth" title="nextMonth" class="right" onClick="doNextMonth" />
         </View>
         <View id="calendar">
-            <Widget id="current" src="jp.co.mountposition.calendar" />
+            <Widget id="current" src="com.apiomat.calendar" />
         </View>
 	</Window>
 </Alloy>

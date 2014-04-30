@@ -1,19 +1,19 @@
 /**
  * original author:	hamasyou (https://github.com/hamasyou)
  * original url:	https://github.com/hamasyou/titanium_alloy_calendar
- * 
+ *
  * author: 			Apinauten GmbH (Tim Friedrich)
  * url:				http://www.apiomat.com
  * version:			1.2
  * license:			MIT License
- * 
+ *
  * tags: 			calendar, alloy, titanium, swipe, tabs
  */
 
 var CALENDAR_WIDTH, DAY_COLOR, OUTDAY_COLOR, TILE_WIDTH, WEEK_COLOR, args, calendarMonth, col, createWeekView, day, dayOfWeek, doClick, i, moment, nextMonth, period, prevMonth, row, tile, weekView, _i, _j, _k, _len, _ref, _ref1, _ref2;
 
 //a javascript date library for parsing, validating, manipulating, and formatting dates.
-moment = require('moment');
+moment = require('alloy/moment');
 
 //get all args
 args = arguments[0] || {};
@@ -22,35 +22,38 @@ args = arguments[0] || {};
  * init some variables
  */
 period = args.period != null ? moment(args.period) : moment();
-weekStartsWith = args.weekStartOn!=null ? args.weekStartOn : "monday";
-tiles = []; //tileArray
-tabCount	=args.tabCount				!=null 	? 	args.tabCount 			: 3;
-dateCount	=args.dateCount				!=null 	? 	args.dateCount 			: 7;
-dateSpace	=args.dateSpace				!=null 	? 	args.dateSpace 			: 30;
-tabBar		=args.tabBar				!=null 	? 	args.tabBar 			: false;
-displayDayNames		= 	args.displayDayNames		!=null	?	args.displayDayNames		:	true;
-holiday		= 	args.holiday			!=null	?	args.holiday			:	true;
-font		= 	args.font				!=null 	?	args.font				: 	{fontSize : '16dp'};
-rangeFromToday=args.rangeFromToday		!=null	?	args.rangeFromToday		:	false;
-range		=	args.range				!=null	?	args.range				:	6;
-args.color	=	args.color				!=null	?	args.color				: 	{};
-tabBgColor	=	args.color.tabBgColor	!=null 	? 	args.color.tabBgColor 	: 	"white";
-tabColor	=	args.color.tabColor		!=null	?	args.color.tabColor		: 	"black";
-sat			= 	args.color.sat			!=null	?	args.color.sat			:	"grey";
-sun			= 	args.color.sun			!=null	?	args.color.sun			:	"grey";
-work		= 	args.color.work			!=null	?	args.color.work			:	"black";
-out			= 	args.color.out			!=null	?	args.color.out			:	"#ececec";
-today		= 	args.color.today		!=null	?	args.color.today		:	"red";
+weekStartsWith = args.weekStartOn != null ? args.weekStartOn : "monday";
+tiles = [];
+//tileArray
+tabCount = args.tabCount != null ? args.tabCount : 3;
+dateCount = args.dateCount != null ? args.dateCount : 7;
+dateSpace = args.dateSpace != null ? args.dateSpace : 30;
+tabBar = args.tabBar != null ? args.tabBar : false;
+displayDayNames = args.displayDayNames != null ? args.displayDayNames : true;
+holiday = args.holiday != null ? args.holiday : true;
+font = args.font != null ? args.font : {
+	fontSize : '16dp'
+};
+rangeFromToday = args.rangeFromToday != null ? args.rangeFromToday : false;
+range = args.range != null ? args.range : 6;
+args.color = args.color != null ? args.color : {};
+tabBgColor = args.color.tabBgColor != null ? args.color.tabBgColor : "white";
+tabColor = args.color.tabColor != null ? args.color.tabColor : "black";
+sat = args.color.sat != null ? args.color.sat : "grey";
+sun = args.color.sun != null ? args.color.sun : "grey";
+work = args.color.work != null ? args.color.work : "black";
+out = args.color.out != null ? args.color.out : "grey";
+today = args.color.today != null ? args.color.today : "red";
 
 if (rangeFromToday) {
-	rangeFromToday=false;
+	rangeFromToday = false;
 	Ti.API.info("rangeFromToday isn't supported at the moment");
 }
 
 //callbacks
 var swipeCB = args.swipeCB || undefined;
 var selectCB = args.select || undefined;
-var clickCB=args.click || undefined;
+var clickCB = args.click || undefined;
 
 //eventListener: listen on swipe actions
 $.dates.addEventListener('swipe', function(e) {
@@ -65,15 +68,15 @@ doClick = function(e) {
 	clickCB(e);
 	// var _ref, _ref1, _ref2;
 	// if ((e.source.date != null) && !e.source._isEntry) {
-		// if ($.selected != null) {
-			// if (( _ref = $.selected.children[0]) != null) {
-				// _ref.backgroundColor = "transparent";
-			// }
-		// }
-		// $.selected = e.source;
-		// return ( _ref1 = $.selected) != null ? ( _ref2 = _ref1.children[0]) != null ? _ref2.backgroundImage = WPATH('/images/calendar/selected.png') :
-		// void 0 :
-		// void 0;
+	// if ($.selected != null) {
+	// if (( _ref = $.selected.children[0]) != null) {
+	// _ref.backgroundColor = "transparent";
+	// }
+	// }
+	// $.selected = e.source;
+	// return ( _ref1 = $.selected) != null ? ( _ref2 = _ref1.children[0]) != null ? _ref2.backgroundImage = WPATH('/images/calendar/selected.png') :
+	// void 0 :
+	// void 0;
 	// }
 };
 
@@ -84,32 +87,40 @@ weekStart = 0;
  */
 switch(weekStartsWith) {
 	case "monday":
-		weekStart = 2;
+		moment.lang("de", {
+			week : {
+				dow : 1
+			}
+		});
 		_ref = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 		if ( typeof args.color !== "undefined") {
-			WEEK_COLOR = [sun,work, work, work, work, work, sat];
-			DAY_COLOR = [sun,work, work, work, work, work, sat];
-			OUTDAY_COLOR = [out,out, out, out, out, out, out];
+			WEEK_COLOR = [work, work, work, work, work, sat, sun];
+			DAY_COLOR = [work, work, work, work, work, sat, sun];
+			OUTDAY_COLOR = [out, out, out, out, out, out, out];
 
 		} else {
 			WEEK_COLOR = ['#999999', '#999999', '#999999', '#999999', '#999999', '#91C176', '#FF9999'];
-			DAY_COLOR = ['#FF0000', '#333333', '#333333', '#333333', '#333333', '#333333', '#64A515'];
-			OUTDAY_COLOR = ['#999999', '#999999', '#999999', '#999999', '#999999', '#91C176', '#FF9999'];
+			DAY_COLOR = ['#333333', '#333333', '#333333', '#333333', '#333333', '#64A515', '#FF0000'];
+			OUTDAY_COLOR = ['grey', 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'];
 
 		}
 		break;
 	case "sunday":
-		weekStart = 1;
+		moment.lang("en", {
+			week : {
+				dow : 0
+			}
+		});
 		_ref = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 		if ( typeof args.color !== "undefined") {
-			WEEK_COLOR = [sun,work, work, work, work, work, sat];
-			DAY_COLOR = [sun,work, work, work, work, work, sat];
-			OUTDAY_COLOR = [out,out, out, out, out, out, out];
+			WEEK_COLOR = [sun, work, work, work, work, work, sat];
+			DAY_COLOR = [sun, work, work, work, work, work, sat];
+			OUTDAY_COLOR = [out, out, out, out, out, out, out];
 
 		} else {
 			WEEK_COLOR = ['#FF9999', '#999999', '#999999', '#999999', '#999999', '#999999', '#91C176'];
 			DAY_COLOR = ['#FF0000', '#333333', '#333333', '#333333', '#333333', '#333333', '#64A515'];
-			OUTDAY_COLOR = ['#FF9999', '#999999', '#999999', '#999999', '#999999', '#999999', '#91C176'];
+			OUTDAY_COLOR = ['grey', 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'];
 
 		}
 		break;
@@ -122,10 +133,10 @@ switch(weekStartsWith) {
  * configure width
  */
 //space left and right
-$.dates.left=dateSpace;
-$.dates.right=dateSpace;
-$.days.left=dateSpace;
-$.days.right=dateSpace;
+$.dates.left = dateSpace;
+$.dates.right = dateSpace;
+$.days.left = dateSpace;
+$.days.right = dateSpace;
 
 //get device width
 var viewWidth = Ti.Platform.displayCaps.platformWidth - 10;
@@ -138,7 +149,7 @@ var tabWidth = viewWidth / tabCount;
 
 tabWidth = Math.floor(tabWidth);
 
-TILE_WIDTH = (viewWidth-(dateSpace*2)) / dateCount;
+TILE_WIDTH = (viewWidth - (dateSpace * 2)) / dateCount;
 TILE_WIDTH = Math.floor(TILE_WIDTH);
 
 CALENDAR_WIDTH = viewWidth;
@@ -149,8 +160,8 @@ $.selected = null;
 
 //display tabBar above?
 if (tabBar) {
-	$.tabBar.backgroundColor=args.color.tabBgColor;
-	
+	$.tabBar.backgroundColor = tabBgColor;
+
 	var months = [];
 	months[0] = L('january', "january");
 	months[1] = L('february', "february");
@@ -167,23 +178,22 @@ if (tabBar) {
 
 	i = -(range);
 	var selectedMonth = "";
-	if(rangeFromToday) {
-		j=moment().month(moment().month())-moment().month(period.month());
-		if(j<i) {
-			j=moment().month(moment().month()).month();
+	if (rangeFromToday) {
+		j = moment().month(moment().month()) - moment().month(period.month());
+		if (j < i) {
+			j = moment().month(moment().month()).month();
 		}
 	} else {
-		j=0;
+		j = 0;
 	}
 	while (i <= range) {
-		var localMonth="";
-		if(rangeFromToday) {
+		var localMonth = "";
+		if (rangeFromToday) {
 			localMonth = moment().month(moment().month()).year(moment().year());
 		} else {
 			localMonth = moment().month(period.month()).year(period.year());
 		}
-		
-		
+
 		if (i < j) {
 			//months before
 			localMonth.subtract("months", Math.abs(i));
@@ -195,7 +205,7 @@ if (tabBar) {
 		//selected month?
 		if (i != j) {
 			var view = Ti.UI.createView({
-				backgroundColor : args.color.tabBgColor,
+				backgroundColor : tabBgColor,
 				width : tabWidth,
 				height : 40,
 				textAlign : 'center',
@@ -217,7 +227,7 @@ if (tabBar) {
 		var viewLabel = Ti.UI.createLabel({
 			id : 'id' + i,
 			color : tabColor,
-			backgroundColor :  tabBgColor,
+			backgroundColor : tabBgColor,
 			textAlign : 'center',
 			width : Ti.UI.FILL,
 			text : months[localMonth.months()],
@@ -239,12 +249,12 @@ if (tabBar) {
 			selectedMonth.add(viewLabel);
 			$.tabBar.add(selectedMonth);
 		}
-		
+
 		//create a border
 		if (i < range) {
 			var border = Ti.UI.createView({
-				color : args.color.tabSpace,
-				backgroundColor : args.color.tabSpace,
+				color : tabSpace,
+				backgroundColor : tabSpace,
 				width : 1,
 				height : 35
 			});
@@ -258,13 +268,15 @@ if (tabBar) {
 	$.tabBar.contentWidth = "auto";
 	var postLayoutCallback = function(e) {
 
-		if (OS_IOS)
-		{
+		if (OS_IOS) {
 			var x = selectedMonth.rect.x - selectedMonth.rect.width;
-			$.tabBar.setContentOffset({x: x, y: selectedMonth.rect.y}, {animated:false});
-		}
-		else
-		{
+			$.tabBar.setContentOffset({
+				x : x,
+				y : selectedMonth.rect.y
+			}, {
+				animated : false
+			});
+		} else {
 			var x = selectedMonth.rect.x * Ti.Platform.displayCaps.logicalDensityFactor - (selectedMonth.rect.width * Ti.Platform.displayCaps.logicalDensityFactor);
 			$.tabBar.scrollTo(x, selectedMonth.rect.y);
 		}
@@ -300,7 +312,7 @@ calendarMonth = moment(period);
 
 period.date(1);
 
-dayOfWeek = period.day();
+dayOfWeek = period.weekday();
 
 prevMonth = moment(period).subtract('months', 1);
 
@@ -352,12 +364,17 @@ weekView = createWeekView();
 
 //previous month
 if (dayOfWeek !== 0) {
-	for ( i = _j = _ref1 = dayOfWeek - weekStart; _ref1 <= 0 ? _j <= 0 : _j >= 0; i = _ref1 <= 0 ? ++_j : --_j) {
+	for ( i = _j = _ref1 = dayOfWeek - 1; _ref1 <= 0 ? _j <= 0 : _j >= 0; i = _ref1 <= 0 ? ++_j : --_j) {
+		if (col === 0) {
+			previousMonth = prevMonth.add('days', (prevMonth.daysInMonth() - 1) - i);
+		} else {
+			previousMonth = previousMonth.add('days', 1);
+		}
 		weekView.add(Ti.UI.createLabel({
 			color : OUTDAY_COLOR[col],
 			textAlign : 'center',
-			text : prevMonth.daysInMonth() - i,
-			font : args.font,
+			text : previousMonth.date(),
+			font : font,
 			backgroundColor : 'transparent',
 			width : TILE_WIDTH,
 			height : TILE_WIDTH,
@@ -375,10 +392,10 @@ for ( i = _k = 1, _ref2 = period.daysInMonth(); 1 <= _ref2 ? _k <= _ref2 : _k >=
 		height : TILE_WIDTH,
 		date : period.unix()
 	});
-	if(period.date()<10) {
-		date="0"+period.date();
+	if (period.date() < 10) {
+		date = "0" + period.date();
 	} else {
-		date=period.date();
+		date = period.date();
 	}
 	if (period.date() == moment().date() && period.month() == moment().month() && period.year() == moment().year()) {
 		//today
@@ -395,7 +412,7 @@ for ( i = _k = 1, _ref2 = period.daysInMonth(); 1 <= _ref2 ? _k <= _ref2 : _k >=
 		});
 	} else {
 		tiles[period.date()] = Ti.UI.createLabel({
-			color : DAY_COLOR[period.day()],
+			color : DAY_COLOR[period.weekday()],
 			font : font,
 			backgroundColor : "transparent",
 			textAlign : 'center',
@@ -426,7 +443,7 @@ while (col !== 0) {
 		color : OUTDAY_COLOR[col],
 		textAlign : 'center',
 		text : nextMonth.date(),
-		font : args.font,
+		font : font,
 		backgroundColor : 'transparent',
 		width : TILE_WIDTH,
 		height : TILE_WIDTH,
@@ -481,7 +498,7 @@ exports.setImage = function(day, image, options) {
  * @param {Object} options
  */
 exports.addView = function(day, view, options) {
-		var _ref3;
+	var _ref3;
 	if (options == null) {
 		options = {};
 	}
